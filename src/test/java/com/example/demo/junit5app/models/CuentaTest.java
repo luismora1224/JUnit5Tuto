@@ -18,6 +18,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
@@ -386,4 +388,17 @@ class CuentaTest {
 		});
 	}
 	
+	//La anotacion @RepeatedTest() sirve para repetir una cantidad de veces un test
+	@RepeatedTest(value=5, name = "Repeticion numero {currentRepetition} de {totalRepetitions}")
+	@DisplayName("Repite Test")
+	void testDebitoCuenta(RepetitionInfo info) {
+		if(info.getCurrentRepetition() == 3){
+			System.out.println("Estamos en la repeticion " + info.getCurrentRepetition());
+		}
+		Cuenta cuenta = new Cuenta("Luis", new BigDecimal("1000.12345"));
+		cuenta.debito(new BigDecimal(100));
+		assertNotNull(cuenta.getSaldo());
+		assertEquals(900, cuenta.getSaldo().intValue());
+		assertEquals("900.12345", cuenta.getSaldo().toPlainString());
+	}
 }
