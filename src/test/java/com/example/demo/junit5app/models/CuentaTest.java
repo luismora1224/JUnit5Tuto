@@ -388,7 +388,7 @@ class CuentaTest {
 		});
 	}
 	
-	//La anotacion @RepeatedTest() sirve para repetir una cantidad de veces un test
+	//La anotacion @RepeatedTest() sirve para repetir una cantidad de veces un test y probar casos de uso
 	@RepeatedTest(value=5, name = "Repeticion numero {currentRepetition} de {totalRepetitions}")
 	@DisplayName("Repite Test")
 	void testDebitoCuenta(RepetitionInfo info) {
