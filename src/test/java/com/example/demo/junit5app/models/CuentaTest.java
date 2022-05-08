@@ -31,6 +31,8 @@ import org.junit.jupiter.api.condition.EnabledOnJre;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import com.example.demo.junit5app.exceptions.DineroInsuficienteException;
 
@@ -400,5 +402,12 @@ class CuentaTest {
 		assertNotNull(cuenta.getSaldo());
 		assertEquals(900, cuenta.getSaldo().intValue());
 		assertEquals("900.12345", cuenta.getSaldo().toPlainString());
+	}
+	
+	//incluyendo un test con parametros
+	@ParameterizedTest
+	@ValueSource(strings = {"ABCD", "AB", "DEF", "GHI"})
+	void lengthStringUsingParameters(String str) {
+		assertTrue(str.length()>0);
 	}
 }
