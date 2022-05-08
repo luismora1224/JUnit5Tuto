@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.Map;
 import java.util.Properties;
 
@@ -32,6 +33,7 @@ import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import com.example.demo.junit5app.exceptions.DineroInsuficienteException;
@@ -407,7 +409,33 @@ class CuentaTest {
 	//incluyendo un test con parametros
 	@ParameterizedTest
 	@ValueSource(strings = {"ABCD", "AB", "DEF", "GHI"})
-	void lengthStringUsingParameters(String str) {
+	void testLengthStringUsingParameters(String str) {
 		assertTrue(str.length()>0);
+	}
+	
+	//incluyendo Csv a un test
+	@ParameterizedTest
+	@CsvSource(value= {"abcd,ABCD","abc,ABC","'',''","abcdef,ABCDEF"})
+	void testUpperCase(String word, String capitalizedWord) {
+		assertEquals(capitalizedWord, word.toUpperCase());
+	}
+	
+	//agregando una nota en salida del test ejemplo "abcd length is 4
+	@ParameterizedTest(name="{0} length is {1}")
+	@CsvSource(value= {"abcd,4","abc,3","'',0","abcdef,6"})
+	void testlength(String word, int expectedLength) {
+		assertEquals(expectedLength, word.length());
+	}
+	
+	//realizando test de rendimiento
+	@Test
+	void Testperformance() {
+		assertTimeout(Duration.ofSeconds(5), ()->{
+			for(int i=0;i<100000;i++) {
+				int j = i;
+				System.out.println(j);
+			}
+		}
+	    );
 	}
 }
