@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assumptions.*;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Properties;
 
@@ -423,13 +424,13 @@ class CuentaTest {
 	//agregando una nota en salida del test ejemplo "abcd length is 4
 	@ParameterizedTest(name="{0} length is {1}")
 	@CsvSource(value= {"abcd,4","abc,3","'',0","abcdef,6"})
-	void testlength(String word, int expectedLength) {
+	void testLength(String word, int expectedLength) {
 		assertEquals(expectedLength, word.length());
 	}
 	
 	//realizando test de rendimiento
 	@Test
-	void Testperformance() {
+	void testPerformance() {
 		assertTimeout(Duration.ofSeconds(5), ()->{
 			for(int i=0;i<100000;i++) {
 				int j = i;
@@ -437,5 +438,13 @@ class CuentaTest {
 			}
 		}
 	    );
+	}
+	
+	@Test
+	void TestArraySortRandomValues() {
+		int[] numbers = {1,2,3,4,5};
+		int[] expected = {3,4,5,2,1};
+		Arrays.sort(expected); //ordenamos el arreglo
+		assertArrayEquals(expected,numbers);
 	}
 }
